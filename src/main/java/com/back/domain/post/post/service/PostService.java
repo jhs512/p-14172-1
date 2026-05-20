@@ -5,7 +5,6 @@ import com.back.domain.post.post.repository.PostRepository;
 import com.back.domain.post.postComment.entity.PostComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,5 +46,9 @@ public class PostService {
 
     public void modifyComment(PostComment postComment, String content) {
         postComment.modify(content);
+    }
+
+    public void delete(Post post) {
+        postRepository.delete(post);
     }
 }
