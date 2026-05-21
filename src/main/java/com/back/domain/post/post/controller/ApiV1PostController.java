@@ -66,15 +66,19 @@ public class ApiV1PostController {
 
     @PostMapping
     @Transactional
-    public RsData<PostDto> write(
+    public RsData<List<Object>> write(
             @RequestBody @Valid PostWriteReqBody reqBody
     ) {
         Post post = postService.write(reqBody.title, reqBody.content);
 
+        long totalCount = postService.count();
+
+        List<Object> data = List.of(totalCount, new PostDto(post));
+
         return new RsData<>(
                 "200-1",
                 "%d번 글이 생성되었습니다.".formatted(post.getId()),
-                new PostDto(post)
+                data
         );
     }
 }
