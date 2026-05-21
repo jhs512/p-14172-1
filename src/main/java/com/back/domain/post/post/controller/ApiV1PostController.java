@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -66,14 +67,17 @@ public class ApiV1PostController {
 
     @PostMapping
     @Transactional
-    public RsData<List<Object>> write(
+    public RsData<Map<String, Object>> write(
             @RequestBody @Valid PostWriteReqBody reqBody
     ) {
         Post post = postService.write(reqBody.title, reqBody.content);
 
         long totalCount = postService.count();
 
-        List<Object> data = List.of(totalCount, new PostDto(post));
+        Map<String, Object> data = Map.of(
+                "totalCount", totalCount,
+                "post", new PostDto(post)
+        );
 
         return new RsData<>(
                 "200-1",
