@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -35,6 +36,7 @@ public class ApiV1PostControllerTest {
                                         }
                                         """)
                 )
-                .andDo(print()); // 응답결과를 출력합니다.
+                .andDo(print())
+                .andExpect(status().isCreated()); // 201 Created 상태코드 검증
     }
 }
