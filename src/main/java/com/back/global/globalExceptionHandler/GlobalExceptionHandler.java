@@ -2,17 +2,19 @@ package com.back.global.globalExceptionHandler;
 
 import com.back.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.NoSuchElementException;
 
-@ControllerAdvice
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+@RestControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
-    @ResponseBody
+    @ResponseStatus(NOT_FOUND)
     public RsData<Void> handle() {
         return new RsData<>(
                 "404-1",
